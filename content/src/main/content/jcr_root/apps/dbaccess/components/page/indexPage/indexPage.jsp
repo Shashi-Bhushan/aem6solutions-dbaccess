@@ -8,4 +8,5 @@
         </div>
     </div>
 </div>
+<cq:include script="/apps/dbaccess/components/page/indexPage/content.jsp"/>
 <cq:include script="/apps/dbaccess/components/page/indexPage/footer.jsp"/>
