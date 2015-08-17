@@ -1,4 +1,6 @@
 <%@include file="/apps/dbaccess/global.jsp" %>
+
+<cq:include script="/apps/dbaccess/components/page/indexPage/clientlibs.jsp"/>
 <cq:include script="/apps/dbaccess/components/page/indexPage/header.jsp"/>
 <div class="midContainer">
     <div class="container">
