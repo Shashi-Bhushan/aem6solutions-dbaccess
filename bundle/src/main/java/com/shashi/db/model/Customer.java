@@ -1,4 +1,4 @@
-package com.shashi.model;
+package com.shashi.db.model;
 
 /**
  * Created by shashi on 17/8/15.
@@ -14,11 +14,18 @@ public class Customer {
     private String custDesc;
 
     public interface DB_FIELD_NAMES{
-        public static String CUSTOMER_ID = "id";
-        public static String CUSTOMER_FIRST_NAME = "fname";
-        public static String CUSTOMER_LAST_NAME = "lname";
-        public static String CUSTOMER_DESCRIPTION = "description";
-        public static String CUSTOMER_ADDRESS = "address";
+        public static final String CUSTOMER_ID = "id";
+        public static final String CUSTOMER_FIRST_NAME = "fname";
+        public static final String CUSTOMER_LAST_NAME = "lname";
+        public static final String CUSTOMER_DESCRIPTION = "description";
+        public static final String CUSTOMER_ADDRESS = "address";
+    }
+
+    public interface DB_CREDENTIALS{
+        public static final String CUSTOMER_TABLE_NAME = "customer";
+        public static final String DB_NAME = "CQ";
+        public static final String PORT = "3306";
+        public static final String DRIVER = "com.mysql.jdbc.Driver";
     }
 
     public String getCustId() {

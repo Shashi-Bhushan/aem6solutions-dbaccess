@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class ConnectionHelperTest {
     ConnectionHelper connectionHelper;
-    Connection connection = null;
+    Connection connection;
 
     @Test
     public void createConnection_CreatingJDBCConnection_SuccessinConnection(){

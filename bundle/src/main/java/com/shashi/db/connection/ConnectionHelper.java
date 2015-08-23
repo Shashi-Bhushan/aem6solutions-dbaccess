@@ -1,5 +1,7 @@
 package com.shashi.db.connection;
 
+import com.shashi.db.Services.CustomerService;
+import com.shashi.db.model.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +17,7 @@ public class ConnectionHelper {
     private String url;
     private static ConnectionHelper connectionHelperInstance;
 
-    private static String driverClass = "com.mysql.jdbc.Driver";
+    private static String driverClass = Customer.DB_CREDENTIALS.DRIVER;
 
 //    private static final Logger LOG = LoggerFactory.getLogger(ConnectionHelper.class);
 
@@ -25,7 +27,7 @@ public class ConnectionHelper {
     private ConnectionHelper(){
         try{
             Class.forName(driverClass).newInstance();
-            url = "jdbc:mysql://localhost:3306/CQ";
+            url = "jdbc:mysql://localhost:" + Customer.DB_CREDENTIALS.PORT + "/"+ Customer.DB_CREDENTIALS.DB_NAME;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
 //            LOG.error("Class Not Found Exception Thrown. Message is : {}" , e.getMessage());
