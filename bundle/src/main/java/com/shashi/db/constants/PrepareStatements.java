@@ -19,7 +19,7 @@ public class PrepareStatements{
         return this;
     }
 
-    public String getData(String filter){
+    public String getQueryString(String filter){
         return "Select " + filter + " from " + tableName;
     }
 }
