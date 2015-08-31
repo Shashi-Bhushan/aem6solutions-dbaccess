@@ -22,7 +22,7 @@ public class Customer {
     }
 
     public interface DB_CREDENTIALS{
-        public static final String CUSTOMER_TABLE_NAME = "customer";
+        public static final String CUSTOMER_TABLE_NAME = "Customer";
         public static final String DB_NAME = "CQ";
         public static final String PORT = "3306";
         public static final String DRIVER = "com.mysql.jdbc.Driver";
