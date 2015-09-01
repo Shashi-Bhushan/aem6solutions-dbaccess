@@ -1,4 +1,4 @@
-package com.shashi.db.Services;
+package com.shashi.db.services;
 
 /**
  * Created by shashi on 23/8/15.
@@ -13,7 +13,7 @@ public interface CustomerService {
      * @param description Description regarding the Customer Type
      * @return int based on the values
      */
-    public int injectData(String firstName, String lastName, String address, String description);
+    public int injectData(String firstName, String lastName, String address, CustomerService.CustomerType description);
 
     /**
      * Retrieves customer data from the Customer table and returns All Customer

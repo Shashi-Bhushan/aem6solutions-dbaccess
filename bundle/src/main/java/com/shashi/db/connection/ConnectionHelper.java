@@ -1,9 +1,6 @@
 package com.shashi.db.connection;
 
-import com.shashi.db.Services.CustomerService;
 import com.shashi.db.model.Customer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

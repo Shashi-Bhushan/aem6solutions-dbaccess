@@ -1,5 +1,8 @@
 package com.shashi.db.constants;
 
+import com.shashi.db.model.Customer;
+import com.shashi.db.services.CustomerService;
+
 /**
  * Created by shashi on 23/8/15.
  */
@@ -10,6 +13,34 @@ public class PrepareStatements{
         String QUESTION_MARK = "?";
         String START_CIRCLE_BRANCKET = "(";
         String END_CIRCLE_BRACKET = ")";
+    }
+
+    public interface Operation{
+        String EQUALS = "=";
+    }
+
+    public class ConditionBlock{
+        private String dbField;
+        private String operation;
+        private String value;
+
+        public ConditionBlock(String dbField, String operation, String value) {
+            this.dbField = dbField;
+            this.operation = operation;
+            this.value = value;
+        }
+
+        public String getDbField() {
+            return dbField;
+        }
+
+        public String getOperation() {
+            return operation;
+        }
+
+        public String getValue() {
+            return value;
+        }
     }
 
     /**
@@ -25,8 +56,35 @@ public class PrepareStatements{
         return this;
     }
 
-    public String getSelectQueryString(String filter){
-        return "Select " + filter + " from " + tableName;
+    /**
+     * Gets a plain sql Query without any condition
+     * @param filter
+     * @return
+     */
+    public String getSelectQueryString(String... filter){
+        StringBuilder fields = new StringBuilder( filter[0]);
+        if(filter.length > 1){
+            for(int i=1; i< filter.length;i++)
+                fields.append( ", " + filter[i] );
+        }
+
+        return "Select " + fields + " from " + tableName;
+    }
+
+    /**
+     * Gets a SQL Query with condition
+     * @param condition
+     * @param filter
+     * @return
+     */
+    public String getSelectQueryString(PrepareStatements.ConditionBlock condition, String... filter){
+        StringBuilder fields = new StringBuilder( filter[0]);
+        if(filter.length > 1){
+            for(int i=1; i< filter.length;i++)
+                fields.append( ", " + filter[i] );
+        }
+
+        return "Select " + fields + " from " + tableName + " where " + condition.getDbField() + condition.getOperation() + condition.getValue();
     }
 
     public String getInsertQueryString(String... filter){

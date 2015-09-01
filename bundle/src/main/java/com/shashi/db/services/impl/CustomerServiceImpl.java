@@ -1,9 +1,10 @@
-package com.shashi.db.Services.impl;
+package com.shashi.db.services.impl;
 
-import com.shashi.db.Services.CustomerService;
+import com.shashi.db.services.CustomerService;
 import com.shashi.db.connection.ConnectionHelper;
 import com.shashi.db.constants.PrepareStatements;
 import com.shashi.db.model.Customer;
+import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 
 import java.sql.*;
@@ -11,6 +12,7 @@ import java.sql.*;
 /**
  * Created by shashi on 23/8/15.
  */
+@Component(metatype = true, immediate = true)
 @Service(CustomerService.class)
 public class CustomerServiceImpl implements CustomerService{
     PrepareStatements prepareStatements = new PrepareStatements();
@@ -28,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService{
         }
     }
 
-    public int injectData(String firstName, String lastName, String address, String description) {
+    public int injectData(String firstName, String lastName, String address, CustomerService.CustomerType description) {
         int rowCount = 0;
 
         try{
@@ -49,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService{
             while(resultSet.next()){
                 rowCount++;
             }
-//
+            
 //            // assign PK
             int primaryKey = rowCount + 1;
             String insertQuery = prepareStatements.getInsertQueryString(Customer.DB_FIELD_NAMES.CUSTOMER_ID , Customer.DB_FIELD_NAMES.CUSTOMER_FIRST_NAME,
@@ -60,7 +62,7 @@ public class CustomerServiceImpl implements CustomerService{
             insertPreparedStatement.setString(2 , firstName);
             insertPreparedStatement.setString(3 , lastName);
             insertPreparedStatement.setString(4 , address);
-            insertPreparedStatement.setString(5 , description);
+            insertPreparedStatement.setString(5 , description.toString());
 
             insertPreparedStatement.execute();
             return primaryKey;
