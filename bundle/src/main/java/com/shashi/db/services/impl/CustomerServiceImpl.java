@@ -6,6 +6,8 @@ import com.shashi.db.constants.PrepareStatements;
 import com.shashi.db.model.Customer;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.sql.*;
 
@@ -73,6 +75,48 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     public String getData(CustomerType filter) {
+        try{
+            connection = ConnectionHelper.getConnection();
+
+            ResultSet resultSet = null;
+            Statement statement = connection.createStatement();
+
+            // use ProtectedStatement against SQL Injection
+            PreparedStatement selectPreparedStatement = null;
+
+            // set the query and use a PreparedStatement
+            // TODO : change dependency of getSelectQueryString to upperLevel
+            PrepareStatements.ConditionBlock block = prepareStatements.new ConditionBlock(Customer.DB_FIELD_NAMES.CUSTOMER_DESCRIPTION,
+                    PrepareStatements.Operation.EQUALS, filter.toString());
+            String query = prepareStatements.setTableName(Customer.DB_CREDENTIALS.CUSTOMER_TABLE_NAME).getSelectQueryString( block,Customer.DB_FIELD_NAMES.CUSTOMER_FIRST_NAME, Customer.DB_FIELD_NAMES.CUSTOMER_LAST_NAME,
+                    Customer.DB_FIELD_NAMES.CUSTOMER_DESCRIPTION,Customer.DB_FIELD_NAMES.CUSTOMER_ADDRESS );
+
+            selectPreparedStatement = connection.prepareStatement(query);
+
+            resultSet = selectPreparedStatement.executeQuery();
+
+            JSONArray array = new JSONArray();
+            while(resultSet.next()){
+                // TODO: make this dynamic as well
+                String fname = resultSet.getString(1);
+                String lname = resultSet.getString(2);
+                String description = resultSet.getString(3);
+                String address = resultSet.getString(4);
+
+                JSONObject object = new JSONObject();
+
+                object.put(Customer.DB_FIELD_NAMES.CUSTOMER_FIRST_NAME, fname);
+                object.put(Customer.DB_FIELD_NAMES.CUSTOMER_LAST_NAME, lname);
+                object.put(Customer.DB_FIELD_NAMES.CUSTOMER_DESCRIPTION, description);
+                object.put(Customer.DB_FIELD_NAMES.CUSTOMER_ADDRESS, address);
+
+                array.put(object);
+            }
+            return array.toString();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }

@@ -13,6 +13,7 @@ public class PrepareStatements{
         String QUESTION_MARK = "?";
         String START_CIRCLE_BRANCKET = "(";
         String END_CIRCLE_BRACKET = ")";
+        String DOUBLE_QUOTE = "\"";
     }
 
     public interface Operation{
@@ -84,7 +85,7 @@ public class PrepareStatements{
                 fields.append( ", " + filter[i] );
         }
 
-        return "Select " + fields + " from " + tableName + " where " + condition.getDbField() + condition.getOperation() + condition.getValue();
+        return "Select " + fields + " from " + tableName + " where " + condition.getDbField() + condition.getOperation() + Signs.DOUBLE_QUOTE + condition.getValue() + Signs.DOUBLE_QUOTE;
     }
 
     public String getInsertQueryString(String... filter){

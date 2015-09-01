@@ -39,9 +39,10 @@ public class PrepareStatementsTest {
     @Test
     public void getData_getConditionalCustomerDataWithFields_SomeDataQueryFromCustomerTable(){
         PrepareStatements statements = new PrepareStatements();
-        PrepareStatements.ConditionBlock block = statements.new ConditionBlock(Customer.DB_FIELD_NAMES.CUSTOMER_DESCRIPTION, PrepareStatements.Operation.EQUALS, CustomerService.CustomerType.ACTIVE_CUSTOMER.toString());
+        PrepareStatements.ConditionBlock block = statements.new ConditionBlock(Customer.DB_FIELD_NAMES.CUSTOMER_DESCRIPTION,
+                                                    PrepareStatements.Operation.EQUALS, CustomerService.CustomerType.ACTIVE_CUSTOMER.toString());
 
-        assertEquals("Select fname, lname from Customer where description=ACTIVE_CUSTOMER",
+        assertEquals("Select fname, lname from Customer where description=\"ACTIVE_CUSTOMER\"",
                 statements.setTableName(Customer.DB_CREDENTIALS.CUSTOMER_TABLE_NAME).getSelectQueryString( block,Customer.DB_FIELD_NAMES.CUSTOMER_FIRST_NAME, Customer.DB_FIELD_NAMES.CUSTOMER_LAST_NAME )
         );
     }
